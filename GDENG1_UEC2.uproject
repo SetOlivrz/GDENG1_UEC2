@@ -7,7 +7,16 @@
 		{
 			"Name": "GDENG1_UEC2",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"ApexDestruction"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "ApexDestruction",
+			"Enabled": true
 		}
 	]
 }
