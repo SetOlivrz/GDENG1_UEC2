@@ -93,6 +93,8 @@ AGDENG1_UEC2Character::AGDENG1_UEC2Character()
 	TriggerCapsule->OnComponentEndOverlap.AddDynamic(this, &AGDENG1_UEC2Character::OnOverlapEnd);
 }
 
+int AGDENG1_UEC2Character::bulletType = 1;
+
 void AGDENG1_UEC2Character::BeginPlay()
 {
 	// Call the base class  
@@ -325,6 +327,8 @@ void AGDENG1_UEC2Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, 
 			//Store bullet type
 			if (OtherActor->ActorHasTag("1")) this->bulletType = 1;
 			else if (OtherActor->ActorHasTag("2")) this->bulletType = 2;
+			else if (OtherActor->ActorHasTag("3")) this->bulletType = 3;
+			else if (OtherActor->ActorHasTag("4")) this->bulletType = 4;
 
 			UE_LOG(LogTemp, Display, TEXT("Bullet Type: %d"), bulletType);
 
@@ -344,4 +348,10 @@ void AGDENG1_UEC2Character::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AA
 		}
 	}
 }
+
+void AGDENG1_UEC2Character::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	bulletType = 1;
+}
+
 
