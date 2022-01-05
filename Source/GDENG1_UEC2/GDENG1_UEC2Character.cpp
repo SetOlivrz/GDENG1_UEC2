@@ -10,6 +10,7 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
+#include "SampleDrop.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -82,6 +83,14 @@ AGDENG1_UEC2Character::AGDENG1_UEC2Character()
 
 	// Uncomment the following line to turn motion controllers on by default:
 	//bUsingMotionControllers = true;
+
+	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger Capsule"));
+	TriggerCapsule->InitCapsuleSize(55.5, 96.f);
+	TriggerCapsule->SetCollisionProfileName(TEXT("Trigger"));
+	TriggerCapsule->SetupAttachment(RootComponent);
+
+	TriggerCapsule->OnComponentBeginOverlap.AddDynamic(this, &AGDENG1_UEC2Character::OnOverlapBegin);
+	TriggerCapsule->OnComponentEndOverlap.AddDynamic(this, &AGDENG1_UEC2Character::OnOverlapEnd);
 }
 
 void AGDENG1_UEC2Character::BeginPlay()
@@ -298,3 +307,41 @@ bool AGDENG1_UEC2Character::EnableTouchscreenMovement(class UInputComponent* Pla
 	
 	return false;
 }
+
+void AGDENG1_UEC2Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(OtherActor && (OtherActor != this) && OtherComp && OtherActor->ActorHasTag("Drop"))
+	{
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap Begin"));
+
+			//For destroying debris WIP
+			if(OtherActor->GetAttachParentActor() != nullptr)
+			{
+				UE_LOG(LogTemp, Display, TEXT("Hello"));
+			}
+
+			//Store bullet type
+			if (OtherActor->ActorHasTag("1")) this->bulletType = 1;
+			else if (OtherActor->ActorHasTag("2")) this->bulletType = 2;
+
+			UE_LOG(LogTemp, Display, TEXT("Bullet Type: %d"), bulletType);
+
+			//Destroy drop
+			OtherActor->Destroy();
+		}
+	}
+}
+
+void AGDENG1_UEC2Character::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor && (OtherActor != this) && OtherComp && OtherActor->ActorHasTag("Drop"))
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
+		}
+	}
+}
+
