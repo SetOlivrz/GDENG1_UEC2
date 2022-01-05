@@ -57,7 +57,7 @@ public:
 	int counter = 0;
 
 	UFUNCTION(BlueprintCallable)
-		void RandBulletType();
+		void SetBulletType();
 
 	UFUNCTION(BlueprintCallable)
 		void UpdateBulletType();
