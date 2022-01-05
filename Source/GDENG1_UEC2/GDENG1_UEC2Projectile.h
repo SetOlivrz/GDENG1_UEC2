@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GDENG1_UEC2Character.h"
 #include "GDENG1_UEC2Projectile.generated.h"
 
 class USphereComponent;

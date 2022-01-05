@@ -9,7 +9,6 @@ void AGDENG1_UEC2Projectile::BeginPlay()
 	Super::BeginPlay();
 	RandBulletType();
 	UpdateBulletType();
-	
 }
 
 AGDENG1_UEC2Projectile::AGDENG1_UEC2Projectile() 
@@ -52,7 +51,9 @@ void AGDENG1_UEC2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAc
 
 void AGDENG1_UEC2Projectile::RandBulletType()
 {
-	counter = FMath::RandRange(1, 4); // temp basis for projectile type
+	//counter = FMath::RandRange(1, 4); // temp basis for projectile type
+
+	counter = AGDENG1_UEC2Character::bulletType;
 
 	switch (counter)
 	{
