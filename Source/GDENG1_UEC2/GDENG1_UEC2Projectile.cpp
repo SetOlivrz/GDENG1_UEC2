@@ -4,6 +4,14 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 
+void AGDENG1_UEC2Projectile::BeginPlay()
+{
+	Super::BeginPlay();
+	RandBulletType();
+	UpdateBulletType();
+	
+}
+
 AGDENG1_UEC2Projectile::AGDENG1_UEC2Projectile() 
 {
 	// Use a sphere as a simple collision representation
@@ -28,7 +36,7 @@ AGDENG1_UEC2Projectile::AGDENG1_UEC2Projectile()
 	ProjectileMovement->bShouldBounce = true;
 
 	// Die after 3 seconds by default
-	InitialLifeSpan = 3.0f;
+	InitialLifeSpan = 9999999999999999.0f;
 }
 
 void AGDENG1_UEC2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -40,4 +48,53 @@ void AGDENG1_UEC2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAc
 
 		Destroy();
 	}
+}
+
+void AGDENG1_UEC2Projectile::RandBulletType()
+{
+	counter = FMath::RandRange(1, 4); // temp basis for projectile type
+
+	switch (counter)
+	{
+	case 1: projectileType = DefaultProjectile; break;
+	case 2: projectileType = SmallProjectile; break;
+	case 3: projectileType = BigProjectile; break;
+	case 4: projectileType = GiantProjectile; break;
+	}
+
+	UE_LOG(LogTemp, Error, TEXT("counter: %d"), counter);
+}
+
+void AGDENG1_UEC2Projectile::UpdateBulletType()
+{
+
+	switch (projectileType)
+	{
+		case DefaultProjectile: ProjectileMovement->InitialSpeed = 3000.f;
+			ProjectileMovement->MaxSpeed = 3000.f;
+			newScale = FVector(1.0f, 1.0f, 1.0f);
+			break;
+
+		case SmallProjectile: ProjectileMovement->InitialSpeed = 6000.0f;
+			ProjectileMovement->MaxSpeed = 6000.0f;
+			newScale = FVector(0.5f, 0.5f, 0.5f);
+			break;
+
+		case BigProjectile: ProjectileMovement->InitialSpeed = 3000.f;
+			ProjectileMovement->MaxSpeed = 3000.f;
+			newScale = FVector(6.5f, 6.5f, 6.5f);
+			break;
+
+		case GiantProjectile: ProjectileMovement->InitialSpeed = 6000.0f;
+			ProjectileMovement->MaxSpeed = 6000.f;
+			newScale = FVector(14.5f, 14.5f, 14.5f);
+			break;
+
+	}
+
+	//updates scale
+	CollisionComp->SetRelativeScale3D(newScale);
+
+	scale = CollisionComp->GetRelativeScale3D();
+	UE_LOG(LogTemp, Warning, TEXT("x: %f  y: %f z: %f  RADIUS: %f  URADIUS: %F"), scale.X, scale.Y, scale.Z, CollisionComp->GetScaledSphereRadius(), CollisionComp->GetUnscaledSphereRadius());
 }
