@@ -7,7 +7,8 @@
 void AGDENG1_UEC2Projectile::BeginPlay()
 {
 	Super::BeginPlay();
-	RandBulletType();
+
+	SetBulletType();
 	UpdateBulletType();
 }
 
@@ -29,10 +30,9 @@ AGDENG1_UEC2Projectile::AGDENG1_UEC2Projectile()
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	ProjectileMovement->UpdatedComponent = CollisionComp;
-	ProjectileMovement->InitialSpeed = 3000.f;
-	ProjectileMovement->MaxSpeed = 3000.f;
-	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->bShouldBounce = true;
+
+	SetBulletType();
+	UpdateBulletType();
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 9999999999999999.0f;
@@ -49,7 +49,7 @@ void AGDENG1_UEC2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAc
 	}
 }
 
-void AGDENG1_UEC2Projectile::RandBulletType()
+void AGDENG1_UEC2Projectile::SetBulletType()
 {
 	//counter = FMath::RandRange(1, 4); // temp basis for projectile type
 
@@ -57,10 +57,10 @@ void AGDENG1_UEC2Projectile::RandBulletType()
 
 	switch (counter)
 	{
-	case 1: projectileType = DefaultProjectile; break;
-	case 2: projectileType = SmallProjectile; break;
-	case 3: projectileType = BigProjectile; break;
-	case 4: projectileType = GiantProjectile; break;
+		case 1: projectileType = DefaultProjectile; break;
+		case 2: projectileType = SmallProjectile; break;
+		case 3: projectileType = BigProjectile; break;
+		case 4: projectileType = GiantProjectile; break;
 	}
 
 	UE_LOG(LogTemp, Error, TEXT("counter: %d"), counter);
@@ -92,10 +92,12 @@ void AGDENG1_UEC2Projectile::UpdateBulletType()
 			break;
 
 	}
+	ProjectileMovement->bRotationFollowsVelocity = true;
+	ProjectileMovement->bShouldBounce = true;
 
 	//updates scale
 	CollisionComp->SetRelativeScale3D(newScale);
 
 	scale = CollisionComp->GetRelativeScale3D();
-	UE_LOG(LogTemp, Warning, TEXT("x: %f  y: %f z: %f  RADIUS: %f  URADIUS: %F"), scale.X, scale.Y, scale.Z, CollisionComp->GetScaledSphereRadius(), CollisionComp->GetUnscaledSphereRadius());
+	UE_LOG(LogTemp, Warning, TEXT("x: %f  y: %f z: %f  RADIUS: %f  SPEED: %f"), scale.X, scale.Y, scale.Z, CollisionComp->GetScaledSphereRadius(), ProjectileMovement->InitialSpeed);
 }
