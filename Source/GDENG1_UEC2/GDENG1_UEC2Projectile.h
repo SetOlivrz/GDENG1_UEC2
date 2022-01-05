@@ -9,13 +9,23 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 
+// enum types for projectiles
+UENUM(Blueprintable)
+enum ProjectileType
+{
+	DefaultProjectile UMETA(Displayname, "DefaultProjectile"),
+	SmallProjectile UMETA(Displayname, "SmallProjectile"),
+	BigProjectile UMETA(Displayname, "BigProjectile"),
+	GiantProjectile UMETA(Displayname, "GiantProjectile")
+};
+
 UCLASS(config=Game)
 class AGDENG1_UEC2Projectile : public AActor
 {
 	GENERATED_BODY()
 
 	/** Sphere collision component */
-	UPROPERTY(VisibleDefaultsOnly, Category=Projectile)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Projectile, meta = (AllowPrivateAccess = "true"))
 	USphereComponent* CollisionComp;
 
 	/** Projectile movement component */
@@ -25,6 +35,8 @@ class AGDENG1_UEC2Projectile : public AActor
 public:
 	AGDENG1_UEC2Projectile();
 
+	virtual void BeginPlay();
+
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -33,5 +45,20 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+public:
+	ProjectileType projectileType = ProjectileType::DefaultProjectile;
+
+	FVector scale;
+	FVector newScale;
+
+	float initialRad = 16.0f;
+	int counter = 0;
+
+	UFUNCTION(BlueprintCallable)
+		void RandBulletType();
+
+	UFUNCTION(BlueprintCallable)
+		void UpdateBulletType();
 };
 
