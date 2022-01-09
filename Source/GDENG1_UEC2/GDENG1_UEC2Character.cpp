@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 //#include "SampleDrop.h"
+#include "DropParentReference.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -114,6 +115,18 @@ void AGDENG1_UEC2Character::BeginPlay()
 		VR_Gun->SetHiddenInGame(true, true);
 		Mesh1P->SetHiddenInGame(false, true);
 	}
+
+	//Hide drop copies
+
+	dropHolder->SetActorHiddenInGame(true);
+
+	dropReference1->SetActorHiddenInGame(true);
+
+	dropReference2->SetActorHiddenInGame(true);
+
+	dropReference3->SetActorHiddenInGame(true);
+
+	//Add 4th
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -319,9 +332,10 @@ void AGDENG1_UEC2Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, 
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap Begin"));
 
 			//For destroying debris WIP
-			if(OtherActor->GetAttachParentActor() != nullptr)
+			if (OtherActor->FindComponentByClass<UDropParentReference>() != nullptr)
 			{
-				UE_LOG(LogTemp, Display, TEXT("Hello"));
+				UE_LOG(LogTemp, Display, TEXT("%s"), *OtherActor->FindComponentByClass<UDropParentReference>()->dropParent->GetName());
+				OtherActor->FindComponentByClass<UDropParentReference>()->dropParent->Destroy();
 			}
 
 			//Store bullet type

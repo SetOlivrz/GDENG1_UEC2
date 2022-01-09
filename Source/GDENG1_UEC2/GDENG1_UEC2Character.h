@@ -160,5 +160,11 @@ public:
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
 	static int bulletType;
+
+	UPROPERTY(EditAnywhere) AActor* dropHolder;
+	UPROPERTY(EditAnywhere) AActor* dropReference1;
+	UPROPERTY(EditAnywhere) AActor* dropReference2;
+	UPROPERTY(EditAnywhere) AActor* dropReference3;
+	//Add 4th 
 };
 
