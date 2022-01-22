@@ -118,12 +118,13 @@ void AGDENG1_UEC2Character::BeginPlay()
 
 	//Hide drop copies
 
+	
 	dropHolder->SetActorHiddenInGame(true);
-
+	
 	dropReference1->SetActorHiddenInGame(true);
-
+	
 	dropReference2->SetActorHiddenInGame(true);
-
+	
 	dropReference3->SetActorHiddenInGame(true);
 
 	//Add 4th

@@ -41,6 +41,14 @@ void USampleDrop::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	UE_LOG(LogTemp, Display, TEXT("New: %f"), newSize.X);*/
 
 	//SPAWN PROJECTILE
+	switch(FMath::RandRange(0,3))
+	{
+	case 0: actorCopy = CapsuleActor; break;
+	case 1: actorCopy = SquareActor; break;
+	case 2: actorCopy = ConeActor; break;
+	case 3: actorCopy = CylinderActor; break;
+	}
+
 	if (this->actorCopy != nullptr && destroyed)  
 	{
 		if(actorCopy->FindComponentByClass<UDropParentReference>() != nullptr)

@@ -33,5 +33,11 @@ public:
 	bool destroyed = false;
 	bool dropped = false;
 
-	UPROPERTY(EditAnywhere) AActor* actorCopy;
+	UPROPERTY(EditAnywhere) AActor* CapsuleActor;
+	UPROPERTY(EditAnywhere) AActor* SquareActor;
+	UPROPERTY(EditAnywhere) AActor* ConeActor;
+	UPROPERTY(EditAnywhere) AActor* CylinderActor;
+
+	AActor* actorCopy;
+
 };
