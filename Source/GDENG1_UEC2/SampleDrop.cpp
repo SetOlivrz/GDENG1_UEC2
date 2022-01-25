@@ -3,6 +3,8 @@
 
 #include "SampleDrop.h"
 #include "DrawDebugHelpers.h"
+#include "DestructibleComponent.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 USampleDrop::USampleDrop()
@@ -19,6 +21,8 @@ void USampleDrop::BeginPlay()
 {
 	Super::BeginPlay();
 	this->GetOwner()->GetActorBounds(true, initialOrigin, initialSize, false);
+	
+	
 }
 
 
@@ -32,16 +36,24 @@ void USampleDrop::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	DrawDebugBox(this->GetWorld(), newOrigin, newSize, FColor::Red, false);
 
 	//Check if old bounds x >= new bounds x
-	if (initialSize.X < newSize.X && !dropped) {
+	/*if (initialSize.X < newSize.X && !dropped) {
 		destroyed = true; dropped = true;
 		UE_LOG(LogTemp, Display, TEXT("dropped"));
-	}
+	}*/
 
 	/*UE_LOG(LogTemp, Display, TEXT("Old: %f"), initialSize.X);
 	UE_LOG(LogTemp, Display, TEXT("New: %f"), newSize.X);*/
 
 	//SPAWN PROJECTILE
-	switch(FMath::RandRange(0,3))
+	//SpawnDrop();
+}
+
+void USampleDrop::SpawnDrop()
+{
+	destroyed = true; dropped = true;
+	UE_LOG(LogTemp, Display, TEXT("dropped"));
+
+	switch (FMath::RandRange(0, 3))
 	{
 	case 0: actorCopy = CapsuleActor; break;
 	case 1: actorCopy = SquareActor; break;
@@ -49,10 +61,10 @@ void USampleDrop::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	case 3: actorCopy = CylinderActor; break;
 	}
 
-	if (this->actorCopy != nullptr && destroyed)  
+	if (this->actorCopy != nullptr && destroyed)
 	{
-		if(actorCopy->FindComponentByClass<UDropParentReference>() != nullptr)
-		actorCopy->FindComponentByClass<UDropParentReference>()->dropParent = this->GetOwner();
+		if (actorCopy->FindComponentByClass<UDropParentReference>() != nullptr)
+			actorCopy->FindComponentByClass<UDropParentReference>()->dropParent = this->GetOwner();
 		FActorSpawnParameters spawnParams;
 		spawnParams.Template = this->actorCopy;
 		spawnParams.Owner = this->GetOwner();
@@ -65,8 +77,30 @@ void USampleDrop::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 		myActor->AttachToActor(this->GetOwner(), FAttachmentTransformRules::KeepWorldTransform);
 		myActor->SetActorHiddenInGame(false);
 		myActor->SetActorLocation(spawnLocation);
-
+		
 		destroyed = false;
 	}
+}
+
+void USampleDrop::SetDrops(AActor* caps, AActor* sqr, AActor* cone, AActor* cylinder)
+{
+	if(caps != nullptr)
+	{
+		this->CapsuleActor = caps;
+	}
+
+	if (sqr != nullptr)
+	{
+		this->SquareActor = sqr;
+	}
+	if (cone != nullptr)
+	{
+		this->ConeActor = cone;
+	}
+	if (cylinder != nullptr)
+	{
+		this->CylinderActor = cylinder;
+	}
+
 }
 

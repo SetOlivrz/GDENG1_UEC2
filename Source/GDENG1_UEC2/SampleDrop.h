@@ -24,6 +24,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UFUNCTION(BlueprintCallable) void SpawnDrop();
+	UFUNCTION(BlueprintCallable) void SetDrops(AActor* caps, AActor* sqr, AActor *cone, AActor* cylindr);
+
 	FVector initialSize;
 	FVector initialOrigin;
 
@@ -33,10 +37,10 @@ public:
 	bool destroyed = false;
 	bool dropped = false;
 
-	UPROPERTY(EditAnywhere) AActor* CapsuleActor;
-	UPROPERTY(EditAnywhere) AActor* SquareActor;
-	UPROPERTY(EditAnywhere) AActor* ConeActor;
-	UPROPERTY(EditAnywhere) AActor* CylinderActor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) AActor* CapsuleActor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) AActor* SquareActor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) AActor* ConeActor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) AActor* CylinderActor;
 
 	AActor* actorCopy;
 
