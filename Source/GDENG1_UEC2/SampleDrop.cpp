@@ -3,6 +3,7 @@
 
 #include "SampleDrop.h"
 #include "DrawDebugHelpers.h"
+#include "DestructibleComponent.h"
 
 // Sets default values for this component's properties
 USampleDrop::USampleDrop()
@@ -19,6 +20,7 @@ void USampleDrop::BeginPlay()
 {
 	Super::BeginPlay();
 	this->GetOwner()->GetActorBounds(true, initialOrigin, initialSize, false);
+	
 }
 
 
@@ -41,7 +43,12 @@ void USampleDrop::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	UE_LOG(LogTemp, Display, TEXT("New: %f"), newSize.X);*/
 
 	//SPAWN PROJECTILE
-	switch(FMath::RandRange(0,3))
+	//SpawnDrop();
+}
+
+void USampleDrop::SpawnDrop()
+{
+	switch (FMath::RandRange(0, 3))
 	{
 	case 0: actorCopy = CapsuleActor; break;
 	case 1: actorCopy = SquareActor; break;
@@ -49,10 +56,10 @@ void USampleDrop::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	case 3: actorCopy = CylinderActor; break;
 	}
 
-	if (this->actorCopy != nullptr && destroyed)  
+	if (this->actorCopy != nullptr && destroyed)
 	{
-		if(actorCopy->FindComponentByClass<UDropParentReference>() != nullptr)
-		actorCopy->FindComponentByClass<UDropParentReference>()->dropParent = this->GetOwner();
+		if (actorCopy->FindComponentByClass<UDropParentReference>() != nullptr)
+			actorCopy->FindComponentByClass<UDropParentReference>()->dropParent = this->GetOwner();
 		FActorSpawnParameters spawnParams;
 		spawnParams.Template = this->actorCopy;
 		spawnParams.Owner = this->GetOwner();
