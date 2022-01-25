@@ -24,7 +24,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 	UFUNCTION(BlueprintCallable) void SpawnDrop();
+	UFUNCTION(BlueprintCallable) void SetDrops(AActor* caps, AActor* sqr, AActor *cone, AActor* cylindr);
+
 	FVector initialSize;
 	FVector initialOrigin;
 

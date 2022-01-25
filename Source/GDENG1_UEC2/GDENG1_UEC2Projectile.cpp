@@ -72,22 +72,22 @@ void AGDENG1_UEC2Projectile::UpdateBulletType()
 	switch (projectileType)
 	{
 		case DefaultProjectile: ProjectileMovement->InitialSpeed = 3000.f;
-			ProjectileMovement->MaxSpeed = 3000.f;
+			ProjectileMovement->MaxSpeed = 5000.f;
 			newScale = FVector(1.0f, 1.0f, 1.0f);
 			break;
 
 		case SmallProjectile: ProjectileMovement->InitialSpeed = 6000.0f;
-			ProjectileMovement->MaxSpeed = 6000.0f;
+			ProjectileMovement->MaxSpeed = 8000.0f;
 			newScale = FVector(0.5f, 0.5f, 0.5f);
 			break;
 
 		case BigProjectile: ProjectileMovement->InitialSpeed = 3000.f;
-			ProjectileMovement->MaxSpeed = 3000.f;
+			ProjectileMovement->MaxSpeed = 5000.f;
 			newScale = FVector(6.5f, 6.5f, 6.5f);
 			break;
 
 		case GiantProjectile: ProjectileMovement->InitialSpeed = 6000.0f;
-			ProjectileMovement->MaxSpeed = 6000.f;
+			ProjectileMovement->MaxSpeed = 8000.f;
 			newScale = FVector(14.5f, 14.5f, 14.5f);
 			break;
 
