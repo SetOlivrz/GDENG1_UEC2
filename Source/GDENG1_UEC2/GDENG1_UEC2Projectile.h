@@ -55,6 +55,8 @@ public:
 
 	float initialRad = 16.0f;
 	int counter = 0;
+	float normal_spd = 3000;
+	float increased_spd = 6000;
 
 	UFUNCTION(BlueprintCallable)
 		void SetBulletType();
