@@ -44,7 +44,7 @@ void AGDENG1_UEC2Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAc
 	// Only add impulse and destroy projectile if we hit a physics
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics())
 	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+		OtherComp->AddImpulseAtLocation(GetVelocity() * 10000.0f, GetActorLocation());
 		Destroy();
 	}
 }
@@ -71,23 +71,23 @@ void AGDENG1_UEC2Projectile::UpdateBulletType()
 
 	switch (projectileType)
 	{
-		case DefaultProjectile: ProjectileMovement->InitialSpeed = 3000.f;
-			ProjectileMovement->MaxSpeed = 5000.f;
+		case DefaultProjectile: ProjectileMovement->InitialSpeed = normal_spd;
+			ProjectileMovement->MaxSpeed = normal_spd;
 			newScale = FVector(1.0f, 1.0f, 1.0f);
 			break;
 
-		case SmallProjectile: ProjectileMovement->InitialSpeed = 6000.0f;
-			ProjectileMovement->MaxSpeed = 8000.0f;
+		case SmallProjectile: ProjectileMovement->InitialSpeed = increased_spd;
+			ProjectileMovement->MaxSpeed = increased_spd;
 			newScale = FVector(0.5f, 0.5f, 0.5f);
 			break;
 
-		case BigProjectile: ProjectileMovement->InitialSpeed = 3000.f;
-			ProjectileMovement->MaxSpeed = 5000.f;
+		case BigProjectile: ProjectileMovement->InitialSpeed = normal_spd;
+			ProjectileMovement->MaxSpeed = normal_spd;
 			newScale = FVector(6.5f, 6.5f, 6.5f);
 			break;
 
-		case GiantProjectile: ProjectileMovement->InitialSpeed = 6000.0f;
-			ProjectileMovement->MaxSpeed = 8000.f;
+		case GiantProjectile: ProjectileMovement->InitialSpeed = increased_spd;
+			ProjectileMovement->MaxSpeed = increased_spd;
 			newScale = FVector(14.5f, 14.5f, 14.5f);
 			break;
 
