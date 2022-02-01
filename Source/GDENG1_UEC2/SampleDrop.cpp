@@ -33,7 +33,7 @@ void USampleDrop::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 	//Get new bounds
 	this->GetOwner()->GetActorBounds(true, newOrigin, newSize, false);
-	DrawDebugBox(this->GetWorld(), newOrigin, newSize, FColor::Red, false);
+	//DrawDebugBox(this->GetWorld(), newOrigin, newSize, FColor::Red, false);
 
 	//Check if old bounds x >= new bounds x
 	/*if (initialSize.X < newSize.X && !dropped) {

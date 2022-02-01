@@ -330,7 +330,7 @@ void AGDENG1_UEC2Character::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, 
 	{
 		if(GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap Begin"));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap Begin"));
 
 			//For destroying debris WIP
 			if (OtherActor->FindComponentByClass<UDropParentReference>() != nullptr)
@@ -359,7 +359,7 @@ void AGDENG1_UEC2Character::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AA
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
 		}
 	}
 }
