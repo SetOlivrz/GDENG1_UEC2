@@ -86,12 +86,15 @@ void AGDENG1_UEC2Projectile::UpdateBulletType()
 			newScale = FVector(6.5f, 6.5f, 6.5f);
 			break;
 
-		case GiantProjectile: ProjectileMovement->InitialSpeed = increased_spd;
+		case GiantProjectile: ProjectileMovement->InitialSpeed = increased_spd;;
 			ProjectileMovement->MaxSpeed = increased_spd;
 			newScale = FVector(14.5f, 14.5f, 14.5f);
 			break;
 
 	}
+
+	UE_LOG(LogTemp, Error, TEXT("Speed: %f"), ProjectileMovement->GetMaxSpeed());
+
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->bShouldBounce = true;
 
