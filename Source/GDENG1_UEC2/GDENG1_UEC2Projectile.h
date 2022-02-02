@@ -55,9 +55,11 @@ public:
 
 	float initialRad = 16.0f;
 	int counter = 0;
-	float normal_spd = 3500.0f; //3.5k
+
+	float normal_spd = 3600.0f; //default speed
 	float increased_spd = 10000000000.0f;
-	float increase_factor = 500000000;
+
+	float SPEED_MULTIPLIER = 1001100; //multiplier for fast projectiles
 
 	UFUNCTION(BlueprintCallable)
 		void SetBulletType();
